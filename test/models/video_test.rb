@@ -16,8 +16,7 @@ class VideoTest < ActiveSupport::TestCase
   end
 
   test 'video creation' do
-    video_file =
-      fixture_file_upload 'videos/2001-a-space-odyssey-teaser.mp4'
+    video_file = fixture_file_upload 'videos/small.flv'
 
     assert_difference ->{ Video.count } do
       video = Video.create title: 'Lorem Ipsum', video: video_file
