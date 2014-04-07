@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @video.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @video.description %>
+</p>
+
+<video width="320" height="240" controls>
+  <source src="<%= video_path_of(@video, :mp4) %>" type="video/mp4">
+  <source src="<%= video_path_of(@video, :ogg) %>" type="video/ogg">
+Your browser does not support the video tag.
+</video>
+
+<section id="thumbs">
+  <h2>Thumbs:</h2>
+
+  <ul id="thumbs_list">
+    <% thumbs_of(@video).each do |thumb| %>
+      <li class="thumb">
+        <%= image_tag thumb, width: 300 %>
+      </li>
+    <% end %>
+  </ul>
+</section>
+
+<%= link_to 'Back', videos_path %>

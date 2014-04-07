@@ -1,0 +1,15 @@
+<h1>Listing videos</h1>
+
+<ul id="videos_list">
+  <% @videos.each do |video| %>
+    <li>
+      <%= link_to video do %>
+        <h2><%= video.title %></h2>
+
+        <%= image_tag main_thumb_of(video) %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to 'New Video', new_video_path %>
