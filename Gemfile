@@ -43,3 +43,6 @@ end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+# Resque for background video processing
+gem 'resque'
