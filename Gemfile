@@ -46,3 +46,8 @@ end
 
 # Resque for background video processing
 gem 'resque'
+
+group :development, :test do
+  # Simplecov for tests coverage
+  gem 'simplecov'
+end
