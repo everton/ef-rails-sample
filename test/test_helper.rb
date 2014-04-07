@@ -17,4 +17,13 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  setup do
+    @inline  = Resque.inline
+    Resque.inline = true
+  end
+
+  teardown do
+    Resque.inline = @inline
+    FileUtils.rm_rf Rails.root.join 'public/videos/test/'
+  end
 end

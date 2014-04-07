@@ -5,16 +5,6 @@ require 'test_helper'
 class VideoTest < ActiveSupport::TestCase
   include ActionDispatch::TestProcess
 
-  setup do
-    @inline  = Resque.inline
-    Resque.inline = true
-  end
-
-  teardown do
-    Resque.inline = @inline
-    FileUtils.rm_rf Rails.root.join 'public/videos/test/'
-  end
-
   test 'video creation' do
     video_file = fixture_file_upload 'videos/small.flv'
 
