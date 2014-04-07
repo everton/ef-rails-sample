@@ -1,4 +1,8 @@
+require 'resque/server'
+
 VideoPublicationExample::Application.routes.draw do
+  mount Resque::Server.new, at: "/resque"
+
   resources :videos
 
   # The priority is based upon order of creation: first created -> highest priority.
