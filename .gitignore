@@ -20,3 +20,6 @@
 
 # Ignore videos folder
 /public/videos/*
+
+# Ignore test coverage files
+/coverage
