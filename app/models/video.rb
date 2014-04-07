@@ -3,6 +3,8 @@ class Video < ActiveRecord::Base
 
   after_save :process_video
 
+  validates :title, presence: true, uniqueness: true
+
   private
   def process_video
     return unless video
