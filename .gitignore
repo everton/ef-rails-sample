@@ -16,4 +16,7 @@
 /tmp
 
 # Ignore backup files
-*~
+/**/*~
+
+# Ignore videos folder
+/public/videos/*
