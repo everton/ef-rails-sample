@@ -18,6 +18,8 @@ class ActiveSupport::TestCase
   # -- they do not yet inherit this setting
   fixtures :all
 
+  self.use_instantiated_fixtures = true
+
   setup do
     @inline  = Resque.inline
     Resque.inline = true

@@ -21,14 +21,12 @@ class VideoTest < ActiveSupport::TestCase
   end
 
   test 'video files deleted when video destroyed' do
-    video = videos(:one)
-
-    grant_pre_processed_video_at_path! video
+    grant_pre_processed_video_at_path! @john_video
 
     assert_difference ->{ Video.count }, -1 do
-      video.destroy
+      @john_video.destroy
 
-      video_folder = Rails.root.join("public/videos/test/#{video.id}")
+      video_folder = Rails.root.join("public/videos/test/#{@john_video.id}")
 
       refute File.exist?(video_folder),
         'Video folder was not deleted after record deletion'

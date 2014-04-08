@@ -1,9 +1,18 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# Digested Password for '123'
+<% pass = "$2a$10$DV8TPz67HLfzStiuHzrzG.luP.g/GVmz1Z7Wl5QWeeOMFrSYe1T2e" %>
 
-one:
-  email: MyString
-  password_digest: MyString
+george:
+  email: george.harrison@example.com
+  password_digest: <%= pass %>
 
-two:
-  email: MyString
-  password_digest: MyString
+john:
+  email: john.lennon@example.com
+  password_digest: <%= pass %>
+
+paul:
+  email: paul.mccartney@example.com
+  password_digest: <%= pass %>
+
+ringo:
+  email: ringo.starr@example.com
+  password_digest: <%= pass %>

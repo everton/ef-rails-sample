@@ -8,28 +8,26 @@ class VideosControllerTest < ActionController::TestCase
 
     assert_action_title 'Videos'
 
-    assert_select '#videos_list > li', count: 2 # from fixtures
+    assert_select '#videos_list > li', count: 4 # from fixtures
   end
 
   test 'get show' do
-    video = videos(:one)
+    grant_pre_processed_video_at_path! @john_video
 
-    grant_pre_processed_video_at_path! video
-
-    get :show, id: video.id
+    get :show, id: @john_video.id
 
     assert_response :success
 
-    assert_action_title "Video #{video.title}"
+    assert_action_title "Video #{@john_video.title}"
 
-    video_path = "/videos/test/#{video.id}"
+    video_path = "/videos/test/#{@john_video.id}"
 
     assert_select 'video' do
       assert_select 'source[type=?][src=?]',
-        'video/mp4', "#{video_path}/#{video.id}.mp4"
+        'video/mp4', "#{video_path}/#{@john_video.id}.mp4"
 
       assert_select 'source[type=?][src=?]',
-        'video/ogg', "#{video_path}/#{video.id}.ogg"
+        'video/ogg', "#{video_path}/#{@john_video.id}.ogg"
     end
 
     assert_select 'img[src=?]', "#{video_path}/thumbs/thumb-1.jpg"
@@ -69,35 +67,30 @@ class VideosControllerTest < ActionController::TestCase
   end
 
   test 'get edit' do
-    video = videos(:one)
-
-    get :edit, id: video.id
+    get :edit, id: @john_video.id
 
     assert_response :success
 
-    assert_action_title "Edit video #{video.title}"
+    assert_action_title "Edit video #{@john_video.title}"
 
-    assert_form video_path(video), method: :patch
+    assert_form video_path(@john_video), method: :patch
   end
 
 
   test 'patch valid params to update' do
-    video = videos(:one)
-
-    patch :update, id: video.id, video: {
+    patch :update, id: @john_video.id, video: {
       title: 'Updated title'
     }
 
-    assert_redirected_to video_path(video)
+    assert_redirected_to video_path(@john_video)
 
-    assert_equal 'Updated title', video.reload.title
+    assert_equal 'Updated title', @john_video.reload.title
   end
 
   test 'patch invalid params to update' do
-    video          = videos(:one)
-    original_title = video.title
+    original_title = @john_video.title
 
-    patch :update, id: video.id, video: {
+    patch :update, id: @john_video.id, video: {
       title: '   '
     }
 
@@ -108,12 +101,12 @@ class VideosControllerTest < ActionController::TestCase
 
     assert_select '#error_explanation .error', count: 1
 
-    assert_form video_path(video), method: :patch
+    assert_form video_path(@john_video), method: :patch
   end
 
   test 'delete to destroy' do
     assert_difference -> { Video.count }, -1 do
-      delete :destroy, id: videos(:one).id
+      delete :destroy, id: @john_video.id
     end
 
     assert_redirected_to videos_path
