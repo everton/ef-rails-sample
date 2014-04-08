@@ -1,36 +1,8 @@
 require 'test_helper'
 
 class VideosControllerTest < ActionController::TestCase
-  test 'get index' do
-    get :index
-
-    assert_response :success
-
-    assert_action_title 'Videos'
-
-    assert_select '#videos_list > li', count: 4 # from fixtures
-  end
-
-  test 'get show' do
-    grant_pre_processed_video_at_path! @john_video
-
-    get :show, id: @john_video.id
-
-    assert_response :success
-
-    assert_action_title "Video #{@john_video.title}"
-
-    video_path = "/videos/test/#{@john_video.id}"
-
-    assert_select 'video' do
-      assert_select 'source[type=?][src=?]',
-        'video/mp4', "#{video_path}/#{@john_video.id}.mp4"
-
-      assert_select 'source[type=?][src=?]',
-        'video/ogg', "#{video_path}/#{@john_video.id}.ogg"
-    end
-
-    assert_select 'img[src=?]', "#{video_path}/thumbs/thumb-1.jpg"
+  setup do
+    login! @george
   end
 
   test 'get new' do

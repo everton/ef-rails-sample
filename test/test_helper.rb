@@ -33,6 +33,10 @@ class ActiveSupport::TestCase
     FileUtils.rm_rf Rails.root.join 'public/videos/test/'
   end
 
+  def login!(user)
+    session[:user_id] = user.id
+  end
+
   def grant_pre_processed_video_at_path!(video)
     FileUtils.mkdir_p Rails.root.join('public/videos/test/')
 

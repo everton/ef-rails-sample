@@ -1,6 +1,8 @@
 class VideosController < ApplicationController
   before_action :set_video, only: [:show, :edit, :update, :destroy]
 
+  require_login except: [:show, :index]
+
   def index
     @videos = Video.all
   end
