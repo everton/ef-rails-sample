@@ -111,16 +111,11 @@ class VideosControllerTest < ActionController::TestCase
     assert_form video_path(video), method: :patch
   end
 
-  private
-  def grant_pre_processed_video_at_path!(video)
-    FileUtils.mkdir_p Rails.root.join('public/videos/test/')
+  test 'delete to destroy' do
+    assert_difference -> { Video.count }, -1 do
+      delete :destroy, id: videos(:one).id
+    end
 
-    src  = Rails.root.join('test/fixtures/videos/small-processed')
-    dest = Rails.root.join("public/videos/test/#{video.id}")
-
-    FileUtils.cp_r src, dest
-
-    FileUtils.mv dest.join('small.mp4'), dest.join("#{video.id}.mp4")
-    FileUtils.mv dest.join('small.ogg'), dest.join("#{video.id}.ogg")
+    assert_redirected_to videos_path
   end
 end

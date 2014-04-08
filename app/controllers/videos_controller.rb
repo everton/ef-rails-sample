@@ -1,5 +1,5 @@
 class VideosController < ApplicationController
-  before_action :set_video, only: [:show, :edit, :update]
+  before_action :set_video, only: [:show, :edit, :update, :destroy]
 
   def index
     @videos = Video.all
@@ -39,6 +39,11 @@ class VideosController < ApplicationController
         format.html { render action: 'edit' }
       end
     end
+  end
+
+  def destroy
+    @video.destroy
+    redirect_to videos_path
   end
 
   private
