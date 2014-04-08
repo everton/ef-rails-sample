@@ -31,4 +31,11 @@ end
 
 class ActionController::TestCase
   include FormTestHelper
+
+  def assert_action_title(title)
+    escaped_title = CGI.escape_html(title)
+
+    assert_select 'title', "Videos Publication Example - #{escaped_title}"
+    assert_select 'h1', title
+  end
 end
