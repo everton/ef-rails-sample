@@ -9,6 +9,12 @@
 </head>
 <body>
 
+<% if notice %>
+  <p id="notice"><%= notice %></p>
+<% elsif alert %>
+  <p id="alert"><%= alert %></p>
+<% end %>
+
 <%= yield %>
 
 </body>
