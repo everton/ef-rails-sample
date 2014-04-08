@@ -6,6 +6,8 @@ class VideosControllerTest < ActionController::TestCase
 
     assert_response :success
 
+    assert_action_title 'Videos'
+
     assert_select '#videos_list > li', count: 2 # from fixtures
   end
 
@@ -17,6 +19,8 @@ class VideosControllerTest < ActionController::TestCase
     get :show, id: video.id
 
     assert_response :success
+
+    assert_action_title "Video #{video.title}"
 
     video_path = "/videos/test/#{video.id}"
 
@@ -35,6 +39,8 @@ class VideosControllerTest < ActionController::TestCase
     get :new
 
     assert_response :success
+
+    assert_action_title 'New Video'
 
     assert_form videos_path
   end
@@ -69,6 +75,8 @@ class VideosControllerTest < ActionController::TestCase
 
     assert_response :success
 
+    assert_action_title "Edit video #{video.title}"
+
     assert_form video_path(video), method: :patch
   end
 
@@ -96,11 +104,11 @@ class VideosControllerTest < ActionController::TestCase
     assert_response :success
     assert_template :edit
 
+    assert_action_title "Edit video #{original_title}"
+
     assert_select '#error_explanation .error', count: 1
 
     assert_form video_path(video), method: :patch
-
-    assert_select 'h1', "Edit video #{original_title}"
   end
 
   private

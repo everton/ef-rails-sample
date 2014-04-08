@@ -1,9 +1,7 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Title:</strong>
-  <%= @video.title %>
-</p>
+<%= action_title do %>
+  <span>Video</span>
+  <span class="title"><%= @video.title %></span>
+<% end %>
 
 <p>
   <strong>Description:</strong>
