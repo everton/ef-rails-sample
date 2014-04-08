@@ -36,7 +36,7 @@ class VideosControllerTest < ActionController::TestCase
 
     assert_response :success
 
-    assert_select 'form[action=?][method=post]', videos_path
+    assert_form videos_path
   end
 
   test 'post of valid params to create' do
@@ -59,7 +59,7 @@ class VideosControllerTest < ActionController::TestCase
 
     assert_select '#error_explanation .error', count: 1
 
-    assert_select 'form[action=?][method=post]', videos_path
+    assert_form videos_path
   end
 
   test 'get edit' do
@@ -69,10 +69,7 @@ class VideosControllerTest < ActionController::TestCase
 
     assert_response :success
 
-    assert_select 'form[action=?][method=post]', video_path(video) do
-      assert_select 'input[name=?][type=?][value=?]',
-        '_method', 'hidden', 'patch'
-    end
+    assert_form video_path(video), method: :patch
   end
 
   private
