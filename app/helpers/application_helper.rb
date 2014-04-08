@@ -1,4 +1,20 @@
 module ApplicationHelper
+  def action_title(title = nil, options = {}, &block)
+    if title.nil? and block_given?
+      title = capture(&block)
+    end
+
+    return '' unless title
+
+    title = raw title
+      .gsub(/[\n|\r|\t]+/, '')
+      .gsub(/(\s)\1+/, '\1')
+      .strip
+
+    content_for :title, strip_tags(title).strip
+    content_tag :h1, title, options
+  end
+
   def main_thumb_of(video)
     asset_path "videos/#{Rails.env}/#{video.id}/thumbs/thumb-1.jpg"
   end
