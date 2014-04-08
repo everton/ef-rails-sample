@@ -8,9 +8,12 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 
 require_relative 'form_test_helper'
+require_relative 'validation_test_helper'
 
 class ActiveSupport::TestCase
   ActiveRecord::Migration.check_pending!
+
+  include ValidationTestHelper
 
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   #
