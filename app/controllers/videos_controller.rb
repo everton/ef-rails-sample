@@ -1,10 +1,11 @@
 class VideosController < ApplicationController
+  before_action :set_video, only: [:show, :edit]
+
   def index
     @videos = Video.all
   end
 
   def show
-    @video = Video.find params[:id]
   end
 
   def new
@@ -26,8 +27,15 @@ class VideosController < ApplicationController
     end
   end
 
+  def edit
+  end
+
   private
   def video_params
     params.require(:video).permit(:title, :description, :video)
+  end
+
+  def set_video
+    @video = Video.find params[:id]
   end
 end

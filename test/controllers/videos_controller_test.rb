@@ -62,6 +62,19 @@ class VideosControllerTest < ActionController::TestCase
     assert_select 'form[action=?][method=post]', videos_path
   end
 
+  test 'get edit' do
+    video = videos(:one)
+
+    get :edit, id: video.id
+
+    assert_response :success
+
+    assert_select 'form[action=?][method=post]', video_path(video) do
+      assert_select 'input[name=?][type=?][value=?]',
+        '_method', 'hidden', 'patch'
+    end
+  end
+
   private
   def grant_pre_processed_video_at_path!(video)
     FileUtils.mkdir_p Rails.root.join('public/videos/test/')
