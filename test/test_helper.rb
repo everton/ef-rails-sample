@@ -27,6 +27,18 @@ class ActiveSupport::TestCase
     Resque.inline = @inline
     FileUtils.rm_rf Rails.root.join 'public/videos/test/'
   end
+
+  def grant_pre_processed_video_at_path!(video)
+    FileUtils.mkdir_p Rails.root.join('public/videos/test/')
+
+    src  = Rails.root.join('test/fixtures/videos/small-processed')
+    dest = Rails.root.join("public/videos/test/#{video.id}")
+
+    FileUtils.cp_r src, dest
+
+    FileUtils.mv dest.join('small.mp4'), dest.join("#{video.id}.mp4")
+    FileUtils.mv dest.join('small.ogg'), dest.join("#{video.id}.ogg")
+  end
 end
 
 class ActionController::TestCase

@@ -19,4 +19,19 @@ class VideoTest < ActiveSupport::TestCase
       assert File.exist? videos_path.join "thumbs/thumb-1.jpg"
     end
   end
+
+  test 'video files deleted when video destroyed' do
+    video = videos(:one)
+
+    grant_pre_processed_video_at_path! video
+
+    assert_difference ->{ Video.count }, -1 do
+      video.destroy
+
+      video_folder = Rails.root.join("public/videos/test/#{video.id}")
+
+      refute File.exist?(video_folder),
+        'Video folder was not deleted after record deletion'
+    end
+  end
 end
