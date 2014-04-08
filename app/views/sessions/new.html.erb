@@ -1,0 +1,17 @@
+<%= action_title 'Login' %>
+
+<%= form_tag '/session' do %>
+  <fieldset id="general_information">
+    <legend>Account data</legend>
+
+    <%= label_tag :email %>
+    <%= email_field_tag :email %>
+
+    <%= label_tag :password %>
+    <%= password_field_tag :password %>
+  </fieldset>
+
+  <fieldset id="actions">
+    <%= submit_tag 'Login' %>
+  </fieldset>
+<% end %>
