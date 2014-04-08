@@ -1,5 +1,5 @@
 class VideosController < ApplicationController
-  before_action :set_video, only: [:show, :edit]
+  before_action :set_video, only: [:show, :edit, :update]
 
   def index
     @videos = Video.all
@@ -18,8 +18,7 @@ class VideosController < ApplicationController
     respond_to do |format|
       if @video.save
         format.html do
-          redirect_to @video,
-            notice: 'Video was successfully created.'
+          redirect_to @video, notice: 'Video was successfully created.'
         end
       else
         format.html { render action: 'new' }
@@ -28,6 +27,18 @@ class VideosController < ApplicationController
   end
 
   def edit
+  end
+
+  def update
+    respond_to do |format|
+      if @video.update_attributes video_params
+        format.html do
+          redirect_to @video, notice: 'Video was successfully updated.'
+        end
+      else
+        format.html { render action: 'edit' }
+      end
+    end
   end
 
   private

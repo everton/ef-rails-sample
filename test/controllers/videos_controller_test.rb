@@ -72,6 +72,37 @@ class VideosControllerTest < ActionController::TestCase
     assert_form video_path(video), method: :patch
   end
 
+
+  test 'patch valid params to update' do
+    video = videos(:one)
+
+    patch :update, id: video.id, video: {
+      title: 'Updated title'
+    }
+
+    assert_redirected_to video_path(video)
+
+    assert_equal 'Updated title', video.reload.title
+  end
+
+  test 'patch invalid params to update' do
+    video          = videos(:one)
+    original_title = video.title
+
+    patch :update, id: video.id, video: {
+      title: '   '
+    }
+
+    assert_response :success
+    assert_template :edit
+
+    assert_select '#error_explanation .error', count: 1
+
+    assert_form video_path(video), method: :patch
+
+    assert_select 'h1', "Edit video #{original_title}"
+  end
+
   private
   def grant_pre_processed_video_at_path!(video)
     FileUtils.mkdir_p Rails.root.join('public/videos/test/')
