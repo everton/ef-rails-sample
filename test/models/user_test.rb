@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  test 'password encryption at user creation' do
+  test 'default user creation' do
     user = User.new email: 'test_user@example.com',
       password: '123', password_confirmation: '123'
 
@@ -10,6 +10,8 @@ class UserTest < ActiveSupport::TestCase
     end
 
     assert user.authenticate('123'), 'Password not encrypted properly'
+
+    refute user.admin?, 'Regular user created as admin'
   end
 
   test 'password authentication of users already created' do
