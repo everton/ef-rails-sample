@@ -60,20 +60,24 @@ class ActionController::TestCase
     assert_select 'h1', title
   end
 
-  def assert_login_required_for(http_verb, action, options = {})
-    send(http_verb, action, options)
+  def self.should_require_login_for(http_verb, action, options = {})
+    test "login required to #{http_verb.to_s.upcase} to #{action}" do
+      send(http_verb, action, options)
 
-    assert_redirected_to '/login',
-      "Protected action '#{action}' did not required login"
+      assert_redirected_to '/login',
+        "Protected action '#{action}' did not required login"
+    end
   end
 
-  def assert_admin_required_for(http_verb, action, options = {})
-    send(http_verb, action, options)
+  def self.should_require_admin_for(http_verb, action, options = {})
+    test "admin required to #{http_verb.to_s.upcase} to #{action}" do
+      assert session[:user_id], 'You must loggin an user first'
 
-    assert session[:user_id], 'You must loggin an user first'
+      send(http_verb, action, options)
 
-    assert_redirected_to '/',
-      "Admin action '#{action}' did not required admin privileges"
+      assert_redirected_to '/',
+        "Admin action '#{action}' did not required admin privileges"
+    end
   end
 end
 

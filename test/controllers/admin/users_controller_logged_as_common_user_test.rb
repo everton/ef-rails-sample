@@ -6,22 +6,15 @@ class Admin::UsersControllerLoggedAsCommonUserTest < ActionController::TestCase
     login! @john
   end
 
-  test 'admin actions requires logged user with admin privileges' do
-    assert_admin_required_for :get, :index
+  should_require_admin_for :get, :index
 
-    assert_admin_required_for :get, :edit, id: @john.to_param
+  should_require_admin_for :get, :new
 
-    assert_admin_required_for :put, :update, id: @john.to_param, user: {
-      email: 'new_john_email@example.com'
-    }
+  should_require_admin_for :post, :create
 
-    assert_admin_required_for :get, :new
+  should_require_admin_for :get, :edit, id: 'XXX'
 
-    assert_admin_required_for :post, :create, user: {
-      email: 'new_test_user@example.com',
-      admin: true, password: '123'
-    }
+  should_require_admin_for :put, :update, id: 'XXX'
 
-    assert_admin_required_for :delete, :destroy, id: @john.to_param
-  end
+  should_require_admin_for :delete, :destroy, id: 'XXX'
 end
