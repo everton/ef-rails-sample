@@ -60,3 +60,7 @@ class ActionController::TestCase
     assert_select 'h1', title
   end
 end
+
+class ActionDispatch::IntegrationTest
+  include FormTestHelper
+end
