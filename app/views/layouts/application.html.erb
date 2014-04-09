@@ -9,6 +9,14 @@
 </head>
 <body>
 
+<nav>
+  <% if logged_in? %>
+    <%= link_to 'Signout', logout_path %>
+  <% else %>
+    <%= link_to 'Signin',   login_path %>
+  <% end %>
+</nav>
+
 <% if notice %>
   <p id="notice"><%= notice %></p>
 <% elsif alert %>
