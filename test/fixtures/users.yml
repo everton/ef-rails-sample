@@ -4,15 +4,19 @@
 george:
   email: george.harrison@example.com
   password_digest: <%= pass %>
+  allowed_to_post: true
 
 john:
   email: john.lennon@example.com
   password_digest: <%= pass %>
+  allowed_to_post: true
 
 paul:
   email: paul.mccartney@example.com
   password_digest: <%= pass %>
+  allowed_to_post: true
 
 ringo:
   email: ringo.starr@example.com
   password_digest: <%= pass %>
+  allowed_to_post: false

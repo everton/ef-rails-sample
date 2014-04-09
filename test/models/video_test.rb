@@ -9,7 +9,8 @@ class VideoTest < ActiveSupport::TestCase
     video_file = fixture_file_upload 'videos/small.flv'
 
     assert_difference ->{ Video.count } do
-      video = Video.create title: 'Lorem Ipsum', video: video_file
+      video = Video.create title: 'Lorem Ipsum',
+        user: @john, video: video_file
 
       videos_path = Rails.root.join "public/videos/test/#{video.id}"
 
@@ -31,5 +32,14 @@ class VideoTest < ActiveSupport::TestCase
       refute File.exist?(video_folder),
         'Video folder was not deleted after record deletion'
     end
+  end
+
+  test 'video creation only by allowed users' do
+    allowed, not_allowed = @john, @ringo
+
+    assert_good_value Video, :user, allowed
+
+    assert_bad_value Video, :user, not_allowed,
+      'User not allowed to post video'
   end
 end

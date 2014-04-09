@@ -22,6 +22,8 @@ class VideosControllerTest < ActionController::TestCase
 
     new_video = assigns(:video)
 
+    assert_equal @george, new_video.user # Use current user...
+
     assert_redirected_to video_path(new_video)
   end
 
