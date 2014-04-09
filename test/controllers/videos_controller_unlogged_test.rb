@@ -35,31 +35,19 @@ class VideosControllerUnloggedTest < ActionController::TestCase
     assert_select 'img[src=?]', "#{video_path}/thumbs/thumb-1.jpg"
   end
 
-  test 'get new requires logged user' do
-    get :new
-    assert_redirected_to login_path
-  end
+  test 'video update actions requires logged user' do
+    assert_login_required_for :get, :new
 
-  test 'post to create requires logged user' do
-    post :create, video: { title: 'New video' }
-    assert_redirected_to login_path
-  end
+    assert_login_required_for :get, :edit, id: @john_video.id
 
-  test 'get edit requires logged user' do
-    get :edit, id: @john_video.id
-    assert_redirected_to login_path
-  end
+    assert_login_required_for :post, :create, video: {
+      title: 'New video'
+    }
 
-  test 'patch to update requires logged user' do
-    patch :update, id: @john_video.id, video: {
+    assert_login_required_for :patch, :update, id: @john_video.id, video: {
       title: 'Updated title'
     }
 
-    assert_redirected_to login_path
-  end
-
-  test 'delete to destroy requires logged user' do
-    delete :destroy, id: @john_video.id
-    assert_redirected_to login_path
+    assert_login_required_for :delete, :destroy, id: @john_video.id
   end
 end
