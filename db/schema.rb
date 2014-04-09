@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140409013955) do
+ActiveRecord::Schema.define(version: 20140409125320) do
 
   create_table "users", force: true do |t|
     t.string   "email"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20140409013955) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.boolean  "published",   default: false
   end
 
   add_index "videos", ["user_id"], name: "index_videos_on_user_id"
