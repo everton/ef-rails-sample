@@ -33,10 +33,6 @@ class ActiveSupport::TestCase
     FileUtils.rm_rf Rails.root.join 'public/videos/test/'
   end
 
-  def login!(user)
-    session[:user_id] = user.id
-  end
-
   def grant_pre_processed_video_at_path!(video)
     FileUtils.mkdir_p Rails.root.join('public/videos/test/')
 
@@ -53,6 +49,10 @@ end
 class ActionController::TestCase
   include FormTestHelper
 
+  def login!(user)
+    session[:user_id] = user.id
+  end
+
   def assert_action_title(title)
     escaped_title = CGI.escape_html(title)
 
@@ -65,6 +65,15 @@ class ActionController::TestCase
 
     assert_redirected_to '/login',
       "Protected action '#{action}' did not required login"
+  end
+
+  def assert_admin_required_for(http_verb, action, options = {})
+    send(http_verb, action, options)
+
+    assert session[:user_id], 'You must loggin an user first'
+
+    assert_redirected_to '/',
+      "Admin action '#{action}' did not required admin privileges"
   end
 end
 
