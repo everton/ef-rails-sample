@@ -12,6 +12,7 @@
 <nav>
   <% if logged_in? %>
     <%= link_to 'Signout', logout_path %>
+    <%= link_to 'Admin', admin_users_path if current_user.admin? %>
   <% else %>
     <%= link_to 'Signin',   login_path %>
   <% end %>
