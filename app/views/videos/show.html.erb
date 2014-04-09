@@ -7,6 +7,8 @@
   <span class="status">(unpublished)</span>
 <% end %>
 
+<%= link_to 'Edit', edit_video_path(@video) if logged_in? %>
+
 <p>
   <strong>Description:</strong>
   <%= @video.description %>
