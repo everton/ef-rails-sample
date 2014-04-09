@@ -59,6 +59,13 @@ class ActionController::TestCase
     assert_select 'title', "Videos Publication Example - #{escaped_title}"
     assert_select 'h1', title
   end
+
+  def assert_login_required_for(http_verb, action, options = {})
+    send(http_verb, action, options)
+
+    assert_redirected_to '/login',
+      "Protected action '#{action}' did not required login"
+  end
 end
 
 class ActionDispatch::IntegrationTest
