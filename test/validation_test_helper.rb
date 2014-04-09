@@ -19,6 +19,25 @@ module ValidationTestHelper
     assert_includes described.errors[attr], validation_msg
   end
 
+  # Usage:
+  #   assert_good_value(described, :foo, 'bar')
+  #   assert_good_value(SomeClass, :foo, 'bar')
+  #   assert_good_value(described, :foo, 'bar', 'Bar not valid on foo')
+  def assert_good_value(described, attr, value, fail_msg = nil)
+    described = described.new if described.is_a? Class
+
+    described.send("#{attr}=", value)
+
+    described.valid? # just validates it, don't assert about this,
+    # another attributes can be invalid and we are not testing them now
+
+    fail_msg ||= "Expected #{attr} '#{value}'" +
+      " to be valid on #{described.class.name}.\n" +
+      "Errors on #{attr}: <#{described.errors.inspect}>"
+
+    assert_empty described.errors[attr], fail_msg
+  end
+
   def error_message_for(kind, options = {})
     kind = kind.to_sym
     if I18n.t('activerecord.errors.messages').has_key? kind
