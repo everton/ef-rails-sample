@@ -5,18 +5,22 @@ george:
   email: george.harrison@example.com
   password_digest: <%= pass %>
   allowed_to_post: true
+  admin: true
 
 john:
   email: john.lennon@example.com
   password_digest: <%= pass %>
   allowed_to_post: true
+  admin: false
 
 paul:
   email: paul.mccartney@example.com
   password_digest: <%= pass %>
   allowed_to_post: true
+  admin: false
 
 ringo:
   email: ringo.starr@example.com
   password_digest: <%= pass %>
   allowed_to_post: false
+  admin: false

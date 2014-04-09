@@ -8,6 +8,15 @@ class ApplicationController < ActionController::Base
   before_action :save_return_path
 
   private
+  def self.require_admin(options = {})
+    require_login(options)
+
+    before_filter(options) do
+      redirect_to '/' unless current_user.admin?
+      return false
+    end
+  end
+
   def self.require_login(options = {})
     before_filter(options) do
       redirect_to login_path,
