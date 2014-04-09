@@ -3,6 +3,10 @@
   <span class="title"><%= raw @video.title %></span>
 <% end %>
 
+<% unless @video.published? %>
+  <span class="status">(unpublished)</span>
+<% end %>
+
 <p>
   <strong>Description:</strong>
   <%= @video.description %>

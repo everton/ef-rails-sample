@@ -6,6 +6,10 @@
       <%= link_to video do %>
         <h2><%= video.title %></h2>
 
+        <% unless video.published? %>
+          <span class="status">(unpublished)</span>
+        <% end %>
+
         <%= image_tag main_thumb_of(video) %>
       <% end %>
     </li>
