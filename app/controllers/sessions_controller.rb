@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 class SessionsController < ApplicationController
+  skip_before_action :save_return_path
+
   def new
     @user = User.new
   end
@@ -11,7 +13,8 @@ class SessionsController < ApplicationController
     if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
 
-      redirect_to root_url
+      flash.notice = 'Welcome!'
+      redirect_to session[:return_path] || root_url
     else
       flash.alert = 'Invalid password or username'
       render :new

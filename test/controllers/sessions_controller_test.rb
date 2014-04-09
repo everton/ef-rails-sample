@@ -25,9 +25,11 @@ class SessionsControllerTest < ActionController::TestCase
   end
 
   test 'POST to create with valid data' do
+    session[:return_path] = '/videos/new'
+
     post :create, email: @ringo.email, password: '123'
 
-    assert_redirected_to '/'
+    assert_redirected_to '/videos/new'
 
     assert_equal 'text/html', response.content_type
 

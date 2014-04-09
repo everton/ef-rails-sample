@@ -5,12 +5,20 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user, :logged_in?
 
+  before_action :save_return_path
+
   private
   def self.require_login(options = {})
     before_filter(options) do
-      redirect_to login_path unless logged_in?
+      redirect_to login_path,
+        alert: 'To access this page you must be logged' unless logged_in?
+
       return false
     end
+  end
+
+  def save_return_path
+    session[:return_path] = request.post? ? root_path : request.path
   end
 
   def logged_in?
