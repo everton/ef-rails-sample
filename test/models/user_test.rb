@@ -27,10 +27,6 @@ class UserTest < ActiveSupport::TestCase
         @john.destroy
       end
     end
-
-    assert_raises ActiveRecord::RecordNotFound do
-      User.find @john.id
-    end
   end
 
   test 'avoid blank email' do
