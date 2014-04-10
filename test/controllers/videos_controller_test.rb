@@ -1,9 +1,7 @@
 require 'test_helper'
 
 class VideosControllerTest < ActionController::TestCase
-  setup do
-    login! @george
-  end
+  setup { login! @george }
 
   test 'get index' do
     get :index
@@ -32,9 +30,9 @@ class VideosControllerTest < ActionController::TestCase
   end
 
   test 'post of valid params to create' do
-    assert_difference -> { Video.count } do
-      post :create, video: { title: 'New video', description: 'Lorem Ipsum' }
-    end
+    post :create, video: {
+      title: 'New video', description: 'Lorem Ipsum', user_id: @john.id
+    }
 
     new_video = assigns(:video)
 
