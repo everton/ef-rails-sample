@@ -12,15 +12,24 @@ class ApplicationController < ActionController::Base
     require_login(options)
 
     before_filter(options) do
-      redirect_to '/' unless current_user.admin?
+      require_admin! unless current_user.admin?
     end
   end
 
   def self.require_login(options = {})
     before_filter(options) do
-      redirect_to login_path,
-        alert: 'To access this page you must be logged' unless logged_in?
+      require_login! unless logged_in?
     end
+  end
+
+  def require_login!
+    redirect_to login_path,
+      alert: 'To access this page you must be logged'
+  end
+
+  def require_admin!
+    redirect_to '/',
+      alert: "You don't have access to this page"
   end
 
   def save_return_path
