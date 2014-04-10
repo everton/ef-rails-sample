@@ -32,5 +32,12 @@ class SigninFlowTest < ActionDispatch::IntegrationTest
 
     assert_select 'a[href=?]', '/logout', nil,
       'It did not presented the logout link for logged user'
+
+    get_via_redirect '/logout'
+
+    assert_equal '/', path
+
+    assert_select 'a[href=?]', '/login', nil,
+      'It did not logged user out'
   end
 end

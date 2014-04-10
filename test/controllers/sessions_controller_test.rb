@@ -1,37 +1,7 @@
 require 'test_helper'
 
+# For common login flow see: test/integration/signin_flow_test.rb
 class SessionsControllerTest < ActionController::TestCase
-  test 'recognition of login and logout paths' do
-    assert_routing({ path: '/login', method: :get },
-      { controller: 'sessions', action: 'new' })
-
-    assert_routing({ path: '/logout', method: :get },
-      { controller: 'sessions', action: 'destroy' })
-  end
-
-  test 'GET new as HTML' do
-    get :new
-
-    assert_response :success
-
-    assert_action_title 'Login'
-
-    assert_form session_path do
-      assert_select 'input[type=?][name=?]', 'email', 'email'
-      assert_select 'input[type=?][name=?]', 'password', 'password'
-    end
-  end
-
-  test 'POST to create with valid data' do
-    session[:return_path] = '/videos/new'
-
-    post :create, email: @ringo.email, password: '123'
-
-    assert_redirected_to '/videos/new'
-
-    assert_equal @ringo.id, session[:user_id]
-  end
-
   test 'POST to create with unexistent email' do
     post :create, email: 'unexistent@example.com', password: '123'
 
@@ -54,13 +24,5 @@ class SessionsControllerTest < ActionController::TestCase
     assert_equal 'Invalid password or username', flash.alert
 
     assert_nil session[:user_id], 'User logged in with wrong password'
-  end
-
-  test 'DELETE to destroy' do
-    delete :destroy
-
-    assert_redirected_to '/'
-
-    assert_nil session[:user_id], 'User not logged out properly'
   end
 end
