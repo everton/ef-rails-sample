@@ -20,7 +20,8 @@ class VideosControllerUnloggedTest < ActionController::TestCase
 
     assert_action_title 'Videos'
 
-    assert_select '#videos_list > li', count: 4 # from fixtures
+    # Published videos from fixtures
+    assert_select '#videos_list .video', count: 3
   end
 
   test 'get show' do

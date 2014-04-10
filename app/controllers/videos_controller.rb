@@ -5,6 +5,7 @@ class VideosController < ApplicationController
 
   def index
     @videos = Video.all
+    @videos = @videos.publisheds unless logged_in?
   end
 
   def show

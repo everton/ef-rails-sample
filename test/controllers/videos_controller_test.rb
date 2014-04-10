@@ -5,6 +5,17 @@ class VideosControllerTest < ActionController::TestCase
     login! @george
   end
 
+  test 'get index' do
+    get :index
+
+    assert_response :success
+
+    assert_action_title 'Videos'
+
+    # Logged users see Published and Unpublished videos from fixtures
+    assert_select '#videos_list .video', count: 4
+  end
+
   test 'get new' do
     get :new
 

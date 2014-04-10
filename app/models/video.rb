@@ -7,4 +7,6 @@ class Video < ActiveRecord::Base
   validates :user,  presence: true, allowed_to_post: true
 
   belongs_to :user
+
+  scope :publisheds, -> { where(published: true) }
 end

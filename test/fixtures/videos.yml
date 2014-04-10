@@ -2,18 +2,22 @@ john_video:
   user: john
   title: First John's Test Video
   description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  published: true
 
 john_video_2:
   user: john
   title: Second John's Test Video
   description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  published: false
 
 paul_video:
   user: paul
   title: First Paul's Test Video
   description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  published: true
 
 george_video:
   user: george
   title: First George's Test Video
   description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  published: true
