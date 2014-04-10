@@ -58,9 +58,8 @@ class Admin::UsersControllerTest < ActionController::TestCase
 
     assert_redirected_to admin_users_path
 
-    assert_equal 'text/html', response.content_type
-
     assert_equal 'new_john_email@example.com', @john.reload.email
+
     assert @john.reload.admin?, 'admin checkbox ignored'
   end
 
