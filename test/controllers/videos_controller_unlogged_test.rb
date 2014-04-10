@@ -24,7 +24,7 @@ class VideosControllerUnloggedTest < ActionController::TestCase
     assert_select '#videos_list .video', count: 3
   end
 
-  test 'get show' do
+  test 'get show for published video' do
     grant_pre_processed_video_at_path! @john_video
 
     get :show, id: @john_video.id
@@ -44,5 +44,12 @@ class VideosControllerUnloggedTest < ActionController::TestCase
     end
 
     assert_select 'img[src=?]', "#{video_path}/thumbs/thumb-1.jpg"
+  end
+
+  test 'get show for unpublished video' do
+    get :show, id: @john_unpublished_video.id
+
+    assert_redirected_to login_path,
+      'Unpiblished video presented for unlogged user'
   end
 end

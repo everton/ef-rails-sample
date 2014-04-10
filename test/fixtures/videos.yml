@@ -4,7 +4,7 @@ john_video:
   description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
   published: true
 
-john_video_2:
+john_unpublished_video:
   user: john
   title: Second John's Test Video
   description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."

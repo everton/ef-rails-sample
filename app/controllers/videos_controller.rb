@@ -9,6 +9,7 @@ class VideosController < ApplicationController
   end
 
   def show
+    require_login! unless logged_in? || @video.published?
   end
 
   def new

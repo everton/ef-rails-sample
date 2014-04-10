@@ -16,6 +16,11 @@ class VideosControllerTest < ActionController::TestCase
     assert_select '#videos_list .video', count: 4
   end
 
+  test 'get show for unpublished video' do
+    get :show, id: @john_unpublished_video.id
+    assert_response :success
+  end
+
   test 'get new' do
     get :new
 
