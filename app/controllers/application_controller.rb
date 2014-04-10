@@ -13,7 +13,6 @@ class ApplicationController < ActionController::Base
 
     before_filter(options) do
       redirect_to '/' unless current_user.admin?
-      return false
     end
   end
 
@@ -21,8 +20,6 @@ class ApplicationController < ActionController::Base
     before_filter(options) do
       redirect_to login_path,
         alert: 'To access this page you must be logged' unless logged_in?
-
-      return false
     end
   end
 
