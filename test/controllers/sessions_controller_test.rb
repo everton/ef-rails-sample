@@ -14,11 +14,9 @@ class SessionsControllerTest < ActionController::TestCase
 
     assert_response :success
 
-    assert_equal 'text/html', response.content_type
-
     assert_action_title 'Login'
 
-    assert_form session_path, method: :post do
+    assert_form session_path do
       assert_select 'input[type=?][name=?]', 'email', 'email'
       assert_select 'input[type=?][name=?]', 'password', 'password'
     end
@@ -31,8 +29,6 @@ class SessionsControllerTest < ActionController::TestCase
 
     assert_redirected_to '/videos/new'
 
-    assert_equal 'text/html', response.content_type
-
     assert_equal @ringo.id, session[:user_id]
   end
 
@@ -42,8 +38,6 @@ class SessionsControllerTest < ActionController::TestCase
     assert_response :success
 
     assert_template :new
-
-    assert_equal 'text/html', response.content_type
 
     assert_equal 'Invalid password or username', flash.alert
 
@@ -57,8 +51,6 @@ class SessionsControllerTest < ActionController::TestCase
 
     assert_template :new
 
-    assert_equal 'text/html', response.content_type
-
     assert_equal 'Invalid password or username', flash.alert
 
     assert_nil session[:user_id], 'User logged in with wrong password'
@@ -68,8 +60,6 @@ class SessionsControllerTest < ActionController::TestCase
     delete :destroy
 
     assert_redirected_to '/'
-
-    assert_equal 'text/html', response.content_type
 
     assert_nil session[:user_id], 'User not logged out properly'
   end
