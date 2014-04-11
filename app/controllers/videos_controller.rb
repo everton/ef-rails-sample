@@ -1,4 +1,6 @@
 class VideosController < ApplicationController
+  respond_to :html, :json
+
   require_login except: [:show, :index]
 
   before_action :set_video, only: [:show, :edit, :update, :destroy]
@@ -6,10 +8,25 @@ class VideosController < ApplicationController
   def index
     @videos = Video.all
     @videos = @videos.publisheds unless logged_in?
+
+    respond_with @videos
   end
 
   def show
-    require_login! unless logged_in? || @video.published?
+    if @video.published?
+      respond_with @video
+    else
+      if request.format.html?
+        if logged_in?
+          respond_with @video
+        else
+          require_login!
+        end
+      else
+        require_http_login!
+        respond_with @video
+      end
+    end
   end
 
   def new
@@ -17,37 +34,22 @@ class VideosController < ApplicationController
   end
 
   def create
-    @video = Video.new(video_params.merge user: current_user )
-
-    respond_to do |format|
-      if @video.save
-        format.html do
-          redirect_to @video, notice: 'Video was successfully created.'
-        end
-      else
-        format.html { render action: 'new' }
-      end
-    end
+    @video = Video.create(video_params.merge user: current_user )
+    respond_with @video, notice: 'Video was successfully created.'
   end
 
   def edit
   end
 
   def update
-    respond_to do |format|
-      if @video.update_attributes video_params
-        format.html do
-          redirect_to @video, notice: 'Video was successfully updated.'
-        end
-      else
-        format.html { render action: 'edit' }
-      end
-    end
+    @video.update_attributes video_params
+
+    respond_with @video, notice: 'Video was successfully updated.'
   end
 
   def destroy
     @video.destroy
-    redirect_to videos_path
+    respond_with @video
   end
 
   private

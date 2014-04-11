@@ -23,8 +23,20 @@ class ApplicationController < ActionController::Base
   end
 
   def require_login!
-    redirect_to login_path,
-      alert: 'To access this page you must be logged'
+    if request.format.html?
+      redirect_to login_path,
+        alert: 'To access this page you must be logged'
+    else
+      require_http_login!
+    end
+  end
+
+  def require_http_login!
+    authenticate_with_http_basic do |u, p|
+      @current_user = User.where(email: u).first.try(:authenticate, p)
+    end
+
+    request_http_basic_authentication unless @current_user
   end
 
   def require_admin!
@@ -33,7 +45,7 @@ class ApplicationController < ActionController::Base
   end
 
   def save_return_path
-    session[:return_path] = request.post? ? root_path : request.path
+    session[:return_path] = request.get? ? request.path : root_path
   end
 
   def logged_in?
@@ -41,6 +53,6 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    @current_user ||= User.find_by id: session[:user_id]
   end
 end

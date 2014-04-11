@@ -53,6 +53,12 @@ class ActionController::TestCase
     session[:user_id] = user.id
   end
 
+  def http_login!(username, password)
+    request.env['HTTP_AUTHORIZATION'] =
+      ActionController::HttpAuthentication::Basic
+      .encode_credentials(username, password)
+  end
+
   def assert_action_title(title)
     escaped_title = CGI.escape_html(title)
 
