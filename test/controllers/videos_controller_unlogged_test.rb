@@ -13,13 +13,7 @@ class VideosControllerUnloggedTest < ActionController::TestCase
 
   should_require_login_for :delete, :destroy, id: 'XXX'
 
-  test 'get index' do
-    get :index
-
-    assert_response :success
-
-    assert_action_title 'Videos'
-
+  should_get_with_success :index, action_title: 'Videos' do
     # Published videos from fixtures
     assert_select '#videos_list .video', count: 3
   end

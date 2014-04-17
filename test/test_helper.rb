@@ -85,6 +85,24 @@ class ActionController::TestCase
         "Admin action '#{action}' did not required admin privileges"
     end
   end
+
+  def self.should_get_with_success(action, call_params = {}, &block)
+    test "GET #{action}" do
+      action_title = call_params.delete :action_title
+
+      call_params.each do |k, v|
+        call_params[k] = instance_exec(&v) if v.is_a? Proc
+      end
+
+      get action, call_params
+
+      assert_response :success
+
+      assert_action_title action_title if action_title
+
+      instance_eval &block if block_given?
+    end
+  end
 end
 
 class ActionDispatch::IntegrationTest

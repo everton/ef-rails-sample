@@ -9,15 +9,9 @@ class VideosControllerRequestedForJsonTest < ActionController::TestCase
     http_login! @george.email, '123'
   end
 
-  test 'get index' do
-    get :index
-    assert_response :success
-  end
+  should_get_with_success :index
 
-  test 'get show for unpublished video' do
-    get :show, id: @john_unpublished_video.id
-    assert_response :success
-  end
+  should_get_with_success :show, id: -> { @john_unpublished_video.id }
 
   test 'post of valid params to create' do
     post :create, video: {

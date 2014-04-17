@@ -3,13 +3,7 @@ require 'test_helper'
 class Admin::UsersControllerTest < ActionController::TestCase
   setup { login! @george } # George is admin, see fixtures...
 
-  test 'GET index' do
-    get :index
-
-    assert_response :success
-
-    assert_action_title 'Users'
-
+  should_get_with_success :index, action_title: 'Users' do
     assert_select 'a[href=?]', new_admin_user_path, 'New User'
 
     assert_select 'ol#users' do |ul|
@@ -27,11 +21,7 @@ class Admin::UsersControllerTest < ActionController::TestCase
     end
   end
 
-  test 'GET edit logged' do
-    get :edit, id: @john.to_param
-
-    assert_response :success
-
+  should_get_with_success :edit, id: -> { @john.to_param } do
     assert_action_title "Edit - #{@john.email}"
 
     assert_form admin_user_path(@john), method: :put do
@@ -82,13 +72,7 @@ class Admin::UsersControllerTest < ActionController::TestCase
     end
   end
 
-  test 'GET new' do
-    get :new
-
-    assert_response :success
-
-    assert_action_title 'New User'
-
+  should_get_with_success :new, action_title: 'New User' do
     assert_form admin_users_path, method: :post do
       assert_select 'input[type=?][name=?]',
         'email', 'user[email]'

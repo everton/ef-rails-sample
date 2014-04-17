@@ -3,29 +3,15 @@ require 'test_helper'
 class VideosControllerTest < ActionController::TestCase
   setup { login! @george }
 
-  test 'get index' do
-    get :index
-
-    assert_response :success
-
-    assert_action_title 'Videos'
-
+  should_get_with_success :index, action_title: 'Videos' do
     # Logged users see Published and Unpublished videos from fixtures
     assert_select '#videos_list .video', count: 4
   end
 
-  test 'get show for unpublished video' do
-    get :show, id: @john_unpublished_video.id
-    assert_response :success
-  end
+  # Should get unpublished videos when logged
+  should_get_with_success :show, id: -> { @john_unpublished_video.id }
 
-  test 'get new' do
-    get :new
-
-    assert_response :success
-
-    assert_action_title 'New Video'
-
+  should_get_with_success :new, action_title: 'New Video' do
     assert_form videos_path
   end
 
@@ -54,11 +40,7 @@ class VideosControllerTest < ActionController::TestCase
     assert_form videos_path
   end
 
-  test 'get edit' do
-    get :edit, id: @john_video.id
-
-    assert_response :success
-
+  should_get_with_success :edit, id: -> { @john_video.id } do
     assert_action_title "Edit video #{@john_video.title}"
 
     assert_form video_path(@john_video), method: :patch
