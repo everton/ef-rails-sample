@@ -9,16 +9,16 @@ class VideoTest < ActiveSupport::TestCase
     video_file = fixture_file_upload 'videos/small.flv'
 
     assert_difference ->{ Video.count } do
-      video = Video.create title: 'Lorem Ipsum',
+      @video = Video.create title: 'Lorem Ipsum',
         user: @john, video: video_file
-
-      videos_path = Rails.root.join "public/videos/test/#{video.id}"
-
-      assert File.exist? videos_path.join "#{video.id}.mp4"
-      assert File.exist? videos_path.join "#{video.id}.ogg"
-
-      assert File.exist? videos_path.join "thumbs/thumb-1.jpg"
     end
+
+    videos_path = Rails.root.join "public/videos/test/#{@video.id}"
+
+    assert File.exist? videos_path.join "#{@video.id}.mp4"
+    assert File.exist? videos_path.join "#{@video.id}.ogg"
+
+    assert File.exist? videos_path.join "thumbs/thumb-1.jpg"
   end
 
   test 'video files deleted when video destroyed' do
