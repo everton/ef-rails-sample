@@ -24,6 +24,7 @@ class SigninFlowTest < ActionDispatch::IntegrationTest
       assert_select 'input[name=?]', 'password'
     end
 
+    # TODO: first try with error...
     post_via_redirect '/session', email: @george.email, password: '123'
 
     assert_equal '/videos/new', path

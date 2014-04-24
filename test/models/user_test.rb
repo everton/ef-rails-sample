@@ -15,9 +15,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'password authentication of users already created' do
-    user = users(:george)
-
-    assert user.authenticate('123'),
+    assert @george.authenticate('123'),
       'Can not authenticate user with proper password'
   end
 
